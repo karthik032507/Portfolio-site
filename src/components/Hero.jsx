@@ -4,20 +4,36 @@ import { profile } from '../data/profile'
 
 const TARGET = 'PORTFOLIO'
 const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-const HERO_IMAGE = '/hero.png'
 
 /**
- * Full-viewport cinematic hero.
- * Sequence: brand word scrambles letter-by-letter into PORTFOLIO,
- * then the typography lifts while the portrait rises from below the fold
- * and the subtitle / CTAs fade in. Scroll is locked until it finishes.
+ * Full-viewport typographic hero.
+ * Sequence: brand word scrambles letter-by-letter into PORTFOLIO, then the
+ * typography lifts, a lime rule draws in, and the subtitle / CTAs fade in.
+ * Scroll is locked until it finishes.
  */
-export default function Hero() {
+export default function Hero({ ready = true }) {
   const [text, setText] = useState(profile.brand)
   const typoRef = useRef(null)
   const imgRef = useRef(null)
   const subtitleRef = useRef(null)
   const ctaRef = useRef(null)
+  const introDone = useRef(false)
+
+  // Mouse parallax: text and portrait drift in opposite directions for depth
+  useEffect(() => {
+    if (!window.matchMedia('(pointer: fine)').matches) return
+    const tx = gsap.quickTo(typoRef.current, 'x', { duration: 1.2, ease: 'power3.out' })
+    const ty = gsap.quickTo(typoRef.current, 'y', { duration: 1.2, ease: 'power3.out' })
+    const onMove = (e) => {
+      if (!introDone.current) return
+      const px = e.clientX / window.innerWidth - 0.5
+      const py = e.clientY / window.innerHeight - 0.5
+      tx(px * -40)
+      ty(py * -16)
+    }
+    window.addEventListener('mousemove', onMove)
+    return () => window.removeEventListener('mousemove', onMove)
+  }, [])
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -28,21 +44,24 @@ export default function Hero() {
     document.body.style.overflow = 'hidden'
 
     gsap.set(typoRef.current, { top: '50%', yPercent: -50 })
-    gsap.set(imgRef.current, { y: '100vh' })
+    gsap.set(imgRef.current, { scaleX: 0 })
     gsap.set([subtitleRef.current, ctaRef.current], { opacity: 0, y: 50 })
+
+    if (!ready) return () => {} // wait for the preloader; effect re-runs when ready flips
 
     const finish = () => {
       document.body.style.overflow = 'auto'
+      introDone.current = true
     }
 
     const runReveal = () => {
       tl = gsap.timeline({ onComplete: finish })
       tl.to(typoRef.current, {
-        top: isMobile ? '20%' : '45%',
+        top: isMobile ? '36%' : '40%',
         duration: 1.5,
         ease: 'power3.inOut',
       })
-        .to(imgRef.current, { y: 0, duration: 1.5, ease: 'power3.out' }, '<')
+        .to(imgRef.current, { scaleX: 1, duration: 1.2, ease: 'power3.out' }, '<0.4')
         .to(
           [subtitleRef.current, ctaRef.current],
           { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', stagger: 0.2 },
@@ -78,32 +97,23 @@ export default function Hero() {
     const start = () => {
       if (prefersReduced) {
         setText(TARGET)
-        gsap.set(typoRef.current, { top: isMobile ? '20%' : '45%' })
-        gsap.set(imgRef.current, { y: 0 })
+        gsap.set(typoRef.current, { top: isMobile ? '36%' : '40%' })
+        gsap.set(imgRef.current, { scaleX: 1 })
         gsap.set([subtitleRef.current, ctaRef.current], { opacity: 1, y: 0 })
         finish()
         return
       }
-      timers.push(setTimeout(runScramble, 1000))
+      timers.push(setTimeout(runScramble, 350))
     }
 
-    // Preload the portrait so it never pops in mid-animation
-    const img = new Image()
-    img.src = HERO_IMAGE
-    if (img.complete) start()
-    else {
-      img.onload = start
-      img.onerror = start
-    }
+    start()
 
     return () => {
-      img.onload = null
-      img.onerror = null
       timers.forEach(clearTimeout)
       tl?.kill()
       finish()
     }
-  }, [])
+  }, [ready])
 
   return (
     <section
@@ -124,30 +134,25 @@ export default function Hero() {
         {text}
       </h1>
 
-      {/* Portrait */}
-      <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center">
-        <img
-          ref={imgRef}
-          src={HERO_IMAGE}
-          alt={profile.fullName}
-          className="w-[88vw] max-h-[88vh] object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] sm:w-[400px] md:w-[500px] xl:w-[600px]"
-          draggable="false"
-        />
+      {/* Thin lime rule that draws in under the typography */}
+      <div ref={imgRef} className="absolute left-1/2 top-[58%] z-20 h-px w-[60vw] max-w-[720px] -translate-x-1/2 bg-gradient-to-r from-transparent via-lime to-transparent md:top-[60%]" />
+
+      {/* Subtitle + education, centered under the typography */}
+      <div
+        ref={subtitleRef}
+        className="absolute left-1/2 top-[62%] z-30 w-full -translate-x-1/2 px-6 text-center text-white [text-shadow:0_4px_24px_rgba(0,0,0,0.8)] md:top-[64%]"
+      >
+        <p className="text-2xl sm:text-3xl md:text-5xl xl:text-6xl">
+          <span className="font-bold">{profile.role.bold}</span>{' '}
+          <span className="font-serif font-light italic">{profile.role.italic}</span>
+        </p>
+        <p className="mt-3 text-xs font-medium uppercase tracking-[0.3em] text-mist md:text-sm">{profile.education}</p>
       </div>
 
-      {/* Subtitle — lower-left on desktop, below typography on mobile */}
-      <p
-        ref={subtitleRef}
-        className="absolute z-30 text-white [text-shadow:0_4px_24px_rgba(0,0,0,0.8)] left-1/2 top-[34%] -translate-x-1/2 whitespace-nowrap text-base sm:text-lg md:left-[6vw] md:top-auto md:bottom-[18vh] md:translate-x-0 md:text-3xl xl:text-4xl"
-      >
-        <span className="font-bold">{profile.role.bold}</span>{' '}
-        <span className="font-serif font-light italic">{profile.role.italic}</span>
-      </p>
-
-      {/* CTAs — lower-right on desktop, under subtitle on mobile */}
+      {/* CTAs */}
       <div
         ref={ctaRef}
-        className="absolute z-30 flex items-center gap-3 left-1/2 top-[40%] -translate-x-1/2 md:left-auto md:top-auto md:right-[6vw] md:bottom-[18vh] md:translate-x-0"
+        className="absolute left-1/2 top-[78%] z-30 flex -translate-x-1/2 items-center gap-3 md:top-[80%]"
       >
         <a
           href={profile.resume}

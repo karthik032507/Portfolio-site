@@ -36,6 +36,18 @@ export const journey = [
     ],
   },
   {
+    title: 'Management Associate · E-Cell',
+    org: 'IIIT Sri City',
+    period: 'Jan 2025 – May 2025',
+    description:
+      "Entrepreneurship Cell. Helped run the club's events and outreach — my first taste of coordinating people, deadlines and logistics at college scale.",
+    points: [
+      'Assisted in planning and executing entrepreneurship events and speaker sessions',
+      'Handled on-ground coordination, logistics and participant communication',
+      'Worked with the core team on outreach and student engagement',
+    ],
+  },
+  {
     title: '200+ Problems on LeetCode',
     org: 'Ongoing',
     period: '2025 – Present',

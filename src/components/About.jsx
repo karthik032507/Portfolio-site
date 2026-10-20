@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { profile } from '../data/profile'
 import SkillsMarquee from './SkillsMarquee'
+import TiltPortrait from './TiltPortrait'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -90,13 +91,7 @@ export default function About() {
         <div className="flex flex-col items-center gap-12 lg:grid lg:grid-cols-[300px_1fr] lg:items-start lg:gap-16">
           {/* Portrait */}
           <div className="flex w-full justify-center lg:justify-start">
-            <img
-              src={ABOUT_IMAGE}
-              alt={profile.fullName}
-              className="w-[190px] object-contain drop-shadow-[0_30px_50px_rgba(0,0,0,0.8)] md:w-[220px] lg:w-[260px]"
-              loading="lazy"
-              draggable="false"
-            />
+            <TiltPortrait src={ABOUT_IMAGE} alt={profile.fullName} className="w-[220px] md:w-[250px] lg:w-[290px]" />
           </div>
 
           <div>
