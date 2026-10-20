@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #050505;
+  --color-ink-2: #030303;
+  --color-lime: #ccff00;
+  --color-mist: #9ca3af;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Metallic white → gray gradient used on every giant heading */
+.metal-text {
+  background: linear-gradient(180deg, #ffffff 0%, #d4d4d8 45%, #52525b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+}
+
+/* Keep selection visible on transparent-text headings */
+.metal-text::selection {
+  color: #000;
+  background: var(--color-lime);
+}
+
+/* Seamless marquee: the track holds two copies of the row, translating by half its width */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+.marquee-left { animation: marquee-left var(--marquee-duration, 40s) linear infinite; }
+.marquee-right { animation: marquee-right var(--marquee-duration, 40s) linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-left, .marquee-right { animation: none; }
+}
