@@ -51,3 +51,41 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .marquee-left, .marquee-right { animation: none; }
 }
+
+@keyframes scrollcue {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(200%); }
+}
+
+/* Custom cursor (desktop only — added by Cursor.jsx) */
+.has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
+.cursor-dot, .cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--color-lime);
+}
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1px solid rgba(204, 255, 0, 0.6);
+  transition: width .25s ease, height .25s ease, margin .25s ease, background-color .25s ease, border-color .25s ease;
+}
+.cursor-ring.is-active {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: rgba(204, 255, 0, 0.12);
+  border-color: var(--color-lime);
+}
+.cursor-ring.is-down { transform: translate(-50%, -50%) scale(0.8); }

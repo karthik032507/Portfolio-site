@@ -18,6 +18,14 @@ export const profile = {
     "A B.Tech student at IIIT Sri City who loves building scalable, real-world web apps that people actually use. I work mostly with React, Node.js, Express and MongoDB, and I care about clean architecture, secure APIs and code that holds up in production. Right now I'm sharpening my problem-solving through DSA, learning System Design, and gearing up to dive into GenAI.",
   highlights: ['scalable', 'React', 'Node.js', 'Express', 'MongoDB', 'DSA', 'System Design', 'GenAI'],
 
+  // "Right now" chips under the About paragraph
+  now: [
+    { tag: 'Grinding', text: 'DSA' },
+    { tag: 'Learning', text: 'System Design' },
+    { tag: 'Next up', text: 'GenAI' },
+    { tag: 'Open to', text: 'Internships 2026–27' },
+  ],
+
   // Put your PDF at public/resume.pdf — replace the file any time, nothing else to change.
   resume: '/resume.pdf',
 
@@ -35,5 +43,5 @@ export const profile = {
   ],
 
   // Shown in the footer/contact: short status line recruiters like to see
-  availability: 'Open to internships and full-time roles · 2027–28',
+  availability: 'Open to internships · 2026–27',
 }

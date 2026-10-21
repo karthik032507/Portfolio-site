@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import Preloader from './components/Preloader'
+import Cursor from './components/Cursor'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -14,6 +15,7 @@ export default function App() {
 
   return (
     <>
+      <Cursor />
       {!ready && <Preloader onDone={onLoaded} />}
       <Nav />
       <main>

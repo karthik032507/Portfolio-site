@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { profile } from '../data/profile'
+import DotField from './DotField'
+import TypedLine from './TypedLine'
 
 const TARGET = 'PORTFOLIO'
+const TYPED_LINES = [
+  'whoami → karthikeya · software developer',
+  'building scalable, real-world web apps',
+  'stack: react · node · express · mongodb',
+  'currently: dsa · system design · genai',
+]
 const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 /**
@@ -124,6 +132,7 @@ export default function Hero({ ready = true }) {
       {/* Background radial gradient + overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#1a1a1a_0%,_#050505_70%)]" />
       <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" />
+      <div className="absolute inset-0 z-[5]"><DotField /></div>
 
       {/* Giant typography (behind the person) */}
       <h1
@@ -147,39 +156,21 @@ export default function Hero({ ready = true }) {
           <span className="font-serif font-light italic">{profile.role.italic}</span>
         </p>
         <p className="mt-3 text-xs font-medium uppercase tracking-[0.3em] text-mist md:text-sm">{profile.education}</p>
+        <TypedLine lines={TYPED_LINES} className="mt-6 text-xs md:text-sm" />
       </div>
 
-      {/* CTAs */}
-      <div
+      {/* Scroll cue */}
+      <a
         ref={ctaRef}
-        className="absolute left-1/2 top-[78%] z-30 flex -translate-x-1/2 items-center gap-3 md:top-[80%]"
+        href="#about"
+        aria-label="Scroll to about"
+        className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2 text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-500 transition-colors hover:text-lime"
       >
-        <a
-          href={profile.resume}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-full border border-lime/60 bg-lime px-5 py-2.5 text-sm font-semibold text-black transition-all duration-300 hover:bg-[#b8e600]"
-        >
-          Resume
-        </a>
-        <a
-          href="#contact"
-          className="group flex items-center gap-2 rounded-full border border-white/20 bg-black/40 py-2.5 pl-5 pr-2 text-sm font-medium text-white backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-black/60"
-        >
-          Contact
-          <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/20 transition-transform duration-300 group-hover:rotate-45">
-            <ArrowIcon />
-          </span>
-        </a>
-      </div>
+        scroll
+        <span className="relative h-10 w-px overflow-hidden bg-white/10">
+          <span className="absolute inset-x-0 top-0 h-1/2 animate-[scrollcue_1.6s_ease-in-out_infinite] bg-lime" />
+        </span>
+      </a>
     </section>
-  )
-}
-
-function ArrowIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M7 17 17 7M8 7h9v9" />
-    </svg>
   )
 }

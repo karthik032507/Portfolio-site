@@ -108,7 +108,16 @@ export default function Contact() {
                 ))}
               </ul>
             </div>
-            <p data-stagger className="text-sm text-zinc-500">{profile.availability}</p>
+            <p
+              data-stagger
+              className="inline-flex items-center gap-2.5 rounded-full border border-lime/30 bg-lime/[0.06] px-4 py-2 text-xs font-medium text-zinc-200"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-lime" />
+              </span>
+              {profile.availability}
+            </p>
           </div>
         </div>
 

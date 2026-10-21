@@ -52,13 +52,11 @@ Open `src/data/journey.js` and copy a block. `points` (bullet list) and `cta` (b
 
 All in `src/data/profile.js`. The `highlights` array controls which words in your About paragraph are bold.
 
-## Change your photos
+## Change your photo
 
-- `public/hero.png` — transparent cutout shown in front of the giant PORTFOLIO text
-- `public/about.png` — transparent cutout for the About section
-- `public/glow-bg.png` — optional cinematic footer background (16:9)
+- `public/about.png` — the portrait card in the Intro section (a waist-up photo with the background removed works best)
 
-Prompts for generating these are in `image-prompts.md`. To remove a background from any photo, upload it to remove.bg or run the cutout script you used before.
+To remove a background from any photo, upload it to remove.bg and save the result over `public/about.png`.
 
 ## Coding profiles
 

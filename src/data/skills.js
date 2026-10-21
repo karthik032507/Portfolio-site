@@ -19,7 +19,7 @@ export const skillRows = [
   },
   {
     label: 'Tools',
-    items: ['Git', 'GitHub', 'Postman', 'Docker', 'Vercel', 'Render', 'VS Code'],
+    items: ['Git', 'GitHub', 'Postman', 'Docker', 'Nginx', 'Vercel', 'Render', 'VS Code'],
   },
   {
     label: 'Core CS',
