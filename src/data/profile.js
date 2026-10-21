@@ -26,8 +26,9 @@ export const profile = {
     { tag: 'Open to', text: 'Internships 2026–27' },
   ],
 
-  // Put your PDF at public/resume.pdf — replace the file any time, nothing else to change.
-  resume: '/resume.pdf',
+  // Put your PDF at public/resume.pdf. After replacing the file, bump the number after ?v=
+  // so browsers that cached the old PDF fetch the new one.
+  resume: '/resume.pdf?v=2',
 
   contact: {
     email: 'karthikeya0325@gmail.com',

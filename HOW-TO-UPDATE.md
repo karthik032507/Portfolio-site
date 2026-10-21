@@ -42,7 +42,9 @@ Open `src/data/skills.js` and add the name to the right row's `items` array. To 
 
 ## Update your resume
 
-Replace `public/resume.pdf` with the new file. Keep the same name. Push. Done.
+1. Replace `public/resume.pdf` with the new file. Keep the same name.
+2. In `src/data/profile.js`, bump the number in `resume: '/resume.pdf?v=2'` (make it `?v=3`, then `?v=4`, and so on). This stops browsers from showing a cached old copy.
+3. Commit and push. Done.
 
 ## Add to My Journey
 
