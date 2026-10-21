@@ -47,21 +47,25 @@ export default function Journey() {
         {journey.map((item, i) => {
           const isOpen = open === i
           return (
-            <li key={item.title} className="group border-b border-white/15">
+            <li
+              key={item.title}
+              className={`border-b border-white/15 transition-colors duration-300 ${
+                isOpen ? 'bg-lime text-black' : 'bg-transparent text-white md:hover:bg-lime md:hover:text-black'
+              }`}
+            >
               <button
                 type="button"
                 onClick={() => setOpen(isOpen ? null : i)}
                 aria-expanded={isOpen}
-                className={`w-full text-left transition-colors duration-300 ${
-                  isOpen ? 'bg-lime text-black' : 'bg-transparent text-white md:hover:bg-lime md:hover:text-black'
-                }`}
+                aria-controls={`journey-panel-${i}`}
+                className="block w-full text-left"
               >
                 <div className="mx-auto flex max-w-[1400px] items-center gap-4 px-6 py-6 md:gap-10 md:px-12 md:py-8">
                   <span className="w-8 shrink-0 text-sm font-semibold tabular-nums opacity-60 md:w-12 md:text-base">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-lg font-extrabold uppercase tracking-tight sm:text-2xl md:text-4xl">
+                    <span className="block text-lg font-extrabold uppercase leading-tight tracking-tight sm:text-2xl md:truncate md:text-4xl">
                       {item.title}
                     </span>
                     <span className="mt-1 block text-xs font-medium uppercase tracking-[0.2em] opacity-60 md:text-sm">
@@ -70,13 +74,16 @@ export default function Journey() {
                   </span>
                   <Arrow open={isOpen} />
                 </div>
+              </button>
 
-                {/* Expandable body */}
-                <div
-                  className="grid transition-[grid-template-rows,opacity] duration-500 ease-out"
-                  style={{ gridTemplateRows: isOpen ? '1fr' : '0fr', opacity: isOpen ? 1 : 0 }}
-                >
-                  <div className="overflow-hidden">
+              {/* Expandable body — a sibling of the button (not inside it) so every browser collapses it fully */}
+              <div
+                id={`journey-panel-${i}`}
+                className="grid transition-[grid-template-rows,opacity] duration-500 ease-out"
+                style={{ gridTemplateRows: isOpen ? '1fr' : '0fr', opacity: isOpen ? 1 : 0 }}
+                inert={!isOpen}
+              >
+                <div className="min-h-0 overflow-hidden">
                     <div className="mx-auto grid max-w-[1400px] gap-8 px-6 pb-10 pl-[4.5rem] md:grid-cols-2 md:px-12 md:pb-12 md:pl-[8.5rem]">
                       {item.points?.length > 0 && (
                         <ul className="space-y-2.5">
@@ -95,7 +102,6 @@ export default function Journey() {
                             href={item.cta.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
                             className="relative mt-6 inline-block border border-black bg-black px-6 py-2.5 text-xs font-bold uppercase tracking-[0.2em] text-lime transition-colors duration-300 hover:bg-zinc-900"
                           >
                             <Corner className="-left-1 -top-1" />
@@ -107,9 +113,8 @@ export default function Journey() {
                         )}
                       </div>
                     </div>
-                  </div>
                 </div>
-              </button>
+              </div>
             </li>
           )
         })}

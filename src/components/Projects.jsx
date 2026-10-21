@@ -127,7 +127,7 @@ export default function Projects() {
                 src={p.image}
                 alt={`${p.title.map((t) => t.text + (t.accent ? ' ' + t.accent : '')).join(' ')} screenshot`}
                 draggable="false"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105"
+                className="absolute inset-0 h-full w-full object-cover object-[15%_center] transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               <div className="absolute left-4 top-4 flex items-center gap-2">
@@ -145,7 +145,7 @@ export default function Projects() {
 
             {/* Text */}
             <div className="flex flex-col justify-center p-6 md:p-10">
-              <h3 className="mb-4 font-extrabold uppercase leading-[1.05] tracking-[-0.02em] text-[1.9rem] md:text-[2.6rem]">
+              <h3 className="mb-4 pr-24 font-extrabold uppercase leading-[1.05] tracking-[-0.02em] text-[1.9rem] md:pr-0 md:text-[2.6rem]">
                 <Title parts={p.title} />
               </h3>
               <p className="mb-5 text-sm font-light leading-[1.7] text-mist md:text-[0.95rem]">{p.description}</p>
@@ -192,6 +192,15 @@ export default function Projects() {
           </>
         )}
 
+        {/* Phones only: a second pair beside the title. Positioned from the card's top: image height
+            (card width = 100vw − 3rem, 16:10 → ×0.625) + the card's 1.25rem padding. */}
+        {total > 1 && (
+          <div className="absolute right-5 top-[calc((100vw_-_3rem)_*_0.625_+_1.25rem)] z-20 flex gap-2 md:hidden">
+            <MiniArrow label="Previous project" onClick={() => go(-1)} flip />
+            <MiniArrow label="Next project" onClick={() => go(1)} />
+          </div>
+        )}
+
         {/* Counter + dots */}
         {total > 1 && (
           <div className="mt-8 flex items-center justify-center gap-4">
@@ -230,6 +239,31 @@ function ArrowButton({ label, onClick, flip, className = '' }) {
     >
       <svg
         className={`h-4 w-4 md:h-5 md:w-5 ${flip ? 'rotate-180' : ''}`}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </button>
+  )
+}
+
+/** Compact outlined arrow for the title row on phones. */
+function MiniArrow({ label, onClick, flip }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition-all duration-300 hover:border-lime hover:bg-lime hover:text-black active:scale-95"
+    >
+      <svg
+        className={`h-4 w-4 ${flip ? 'rotate-180' : ''}`}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"

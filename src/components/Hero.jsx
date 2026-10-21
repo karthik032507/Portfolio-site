@@ -126,7 +126,7 @@ export default function Hero({ ready = true }) {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden bg-ink"
+      className="relative min-h-[max(100svh,640px)] overflow-hidden bg-ink"
       aria-label="Introduction"
     >
       {/* Background radial gradient + overlay */}
@@ -137,19 +137,19 @@ export default function Hero({ ready = true }) {
       {/* Giant typography (behind the person) */}
       <h1
         ref={typoRef}
-        className="metal-text pointer-events-none absolute left-1/2 z-10 w-full -translate-x-1/2 select-none text-center font-black uppercase leading-none tracking-[-0.04em] text-[16vw] md:text-[10rem] 2xl:text-[14rem]"
+        className="metal-text pointer-events-none absolute inset-x-0 z-10 select-none text-center font-black uppercase leading-none tracking-[-0.04em] text-[16vw] md:text-[min(10rem,17vw)] 2xl:text-[14rem]"
         aria-label={`${profile.fullName} — Portfolio`}
       >
         {text}
       </h1>
 
       {/* Thin lime rule that draws in under the typography */}
-      <div ref={imgRef} className="absolute left-1/2 top-[58%] z-20 h-px w-[60vw] max-w-[720px] -translate-x-1/2 bg-gradient-to-r from-transparent via-lime to-transparent md:top-[60%]" />
+      <div ref={imgRef} className="absolute inset-x-0 top-[58%] z-20 mx-auto h-px w-[60vw] max-w-[720px] bg-gradient-to-r from-transparent via-lime to-transparent md:top-[60%]" />
 
       {/* Subtitle + education, centered under the typography */}
       <div
         ref={subtitleRef}
-        className="absolute left-1/2 top-[62%] z-30 w-full -translate-x-1/2 px-6 text-center text-white [text-shadow:0_4px_24px_rgba(0,0,0,0.8)] md:top-[64%]"
+        className="absolute inset-x-0 top-[62%] z-30 px-6 text-center text-white [text-shadow:0_4px_24px_rgba(0,0,0,0.8)] md:top-[64%]"
       >
         <p className="text-2xl sm:text-3xl md:text-5xl xl:text-6xl">
           <span className="font-bold">{profile.role.bold}</span>{' '}
@@ -164,7 +164,7 @@ export default function Hero({ ready = true }) {
         ref={ctaRef}
         href="#about"
         aria-label="Scroll to about"
-        className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2 text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-500 transition-colors hover:text-lime"
+        className="absolute inset-x-0 bottom-8 z-30 mx-auto flex w-fit flex-col items-center gap-2 text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-500 transition-colors hover:text-lime"
       >
         scroll
         <span className="relative h-10 w-px overflow-hidden bg-white/10">

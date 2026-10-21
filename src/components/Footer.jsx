@@ -29,9 +29,9 @@ export default function Footer() {
 
       <div className="relative mx-auto flex w-full max-w-[1400px] flex-1 flex-col px-6 pb-8 pt-16 md:px-12 md:pt-20">
         {/* Top row */}
-        <div className="flex flex-col gap-8 border-b border-white/10 pb-8 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col items-center gap-8 border-b border-white/10 pb-8">
           <nav aria-label="Footer">
-            <ul className="flex flex-wrap gap-x-7 gap-y-3">
+            <ul className="flex flex-wrap justify-center gap-x-7 gap-y-3">
               {navLinks.map((l) => (
                 <li key={l.href}>
                   <a href={l.href} className="text-sm font-medium text-zinc-400 transition-colors duration-300 hover:text-lime">
