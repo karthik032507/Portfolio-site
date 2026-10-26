@@ -28,7 +28,7 @@ export const profile = {
 
   // Put your PDF at public/resume.pdf. After replacing the file, bump the number after ?v=
   // so browsers that cached the old PDF fetch the new one.
-  resume: '/resume.pdf?v=3',
+  resume: '/resume.pdf?v=4',
 
   contact: {
     email: 'karthikeya0325@gmail.com',
